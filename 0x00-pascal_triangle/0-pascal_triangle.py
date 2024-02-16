@@ -1,30 +1,27 @@
 #!/usr/bin/python3
+"""You have n number of locked boxes in front of you. 
+Each box is numbered sequentially from 0 to 
+n - 1 and each box may contain keys to the other boxes
+"""
 
 def pascal_triangle(n):
-    if n <= 0: # check if n is less than or equal to 0. If it is, return an empty list.
+    """A function that returns a list of lists 
+    of integers representing the Pascal’s triangle of n:
+    """
+
+    triangle = [[1], [1, 1]]
+
+    if n <= 0:
         return []
+    if n == 1:
+        return [[1]]
 
-    triangle = [] # initialize a list to store the rows of Pascal's Triangle.
-    for i in range(n):
-        row = [1]  # First element in each row is always 1
-        
-        for j in range(1, i):
-            # Calculate the binomial coefficient
-            coefficient = triangle[i-1][j-1] + triangle[i-1][j]
-            row.append(coefficient)
-        
-        if i > 0:
-            row.append(1)  # Last element in each row is always 1
-        
-        triangle.append(row)
-    
+    for i in range(2, n):
+        triangle.append([1])
+        it = triangle[i - 1]
+
+        for j in range(1, len(it)):
+            triangle[i].append(it[j] + it[j - 1])
+        triangle[i].append(1)
+
     return triangle
-
-
-def print_triangle(triangle):
-    for row in triangle:
-        print("[{}]".format(",".join([str(x) for x in row])))
-
-
-if __name__ == "__main__":
-    print_triangle(pascal_triangle(5))
